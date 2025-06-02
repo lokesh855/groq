@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Groq LLM Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        async function sendMessage() {
+            const userMessage = document.getElementById("userMessage").value;
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userMessage })
+            });
+            const data = await response.json();
+            document.getElementById("chatBox").innerHTML += `<p><b>You:</b> ${userMessage}</p>`;
+            document.getElementById("chatBox").innerHTML += `<p><b>LLM:</b> ${data.reply}</p>`;
+        }
+    </script>
+</head>
+<body>
+    <h2>Groq LLM Chat</h2>
+    <div id="chatBox" style="border:1px solid #ccc; padding:10px; height:300px; overflow-y:scroll;"></div>
+    <div class="input-container">
+    <input type="text" id="userMessage" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+    </div>
+</body>
+</html>
